@@ -1,0 +1,4 @@
+title=BattLog
+description=Log battery discharge profile
+exec=/home/retrofw/apps/battlog/battlog.dge
+clock=600

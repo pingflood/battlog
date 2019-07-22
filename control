@@ -1,0 +1,10 @@
+Package: battlog
+Version: 
+Description: Log battery discharge profile
+Section: emus
+Priority: optional
+Maintainer: pingflood
+Architecture: mipsel
+Homepage: https://github.com/pingflood/battlog
+Depends:
+Source: https://github.com/pingflood/battlog
