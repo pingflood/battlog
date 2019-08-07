@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=BattLog
+Comment=Log battery discharge profile
+Exec=battlog.dge
+Icon=battlog
+Categories=applications;
+Terminal=false
+Type=Application
+StartupNotify=true
