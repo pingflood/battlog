@@ -345,12 +345,12 @@ int main(int argc, char* argv[]) {
 			uint32_t yn = 0xFFFFFFFF;
 			uint32_t yx = 0;
 			uint32_t lines = 0;
-	
+
 			// check limits
 			char *line = NULL;
 			size_t len = 0;
 			ssize_t read;
-	
+
 			FILE *f = fopen(log_csv, "r");
 			if (f) {
 				while ((read = getline(&line, &len, f)) != -1) {
@@ -366,32 +366,32 @@ int main(int argc, char* argv[]) {
 				}
 				fclose(f);
 			}
-	
+
 			if (xx == xn) xx = xn + 10;
 			if (yx == yn) yx = yn + 10;
-	
+
 			sprintf(buf, "%0.2f", (float)yx / 1000);
 			tw = draw_text(320, 0, buf, txtColor, VAlignTop);
-	
+
 			limits.x = 10 + tw;
 			limits.y = 50;
 			limits.w = 300 - tw;
 			limits.h = 130;
-	
+
 			draw_axis(limits);
-	
+
 			sprintf(buf, "%0.1f", (float)yx / 1000);
 			draw_text(limits.x - 4, limits.y, buf, txtColor, VAlignMiddle | HAlignRight);
-	
+
 			sprintf(buf, "%0.1f", (float)yn / 1000);
 			draw_text(limits.x - 4, limits.y + limits.h, buf, txtColor, VAlignTop | HAlignRight);
-	
+
 			sprintf(buf, "%s", ms2hms(xn, 1));
 			draw_text(limits.x, limits.y + limits.h, buf, txtColor, VAlignBottom | HAlignLeft);
-	
+
 			sprintf(buf, "%s", ms2hms(xx, 1));
 			tw = draw_text(limits.x + limits.w, limits.y + limits.h, buf, txtColor, VAlignBottom | HAlignRight);
-	
+
 			f = fopen(log_csv, "r");
 			if (f) {
 				uint32_t interval = 1 + lines / 5;
