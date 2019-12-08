@@ -85,8 +85,8 @@ int running = 0;
 volatile uint32_t running_tick = 0;
 
 int32_t log_idx = 0;
-char log_csv[PATH_MAX] = "battery0.csv";
-char log_png[PATH_MAX] = "battery0.png";
+char log_csv[PATH_MAX]; // = "battery0.csv";
+char log_png[PATH_MAX]; // = "battery0.png";
 
 static char buf[1024];
 
@@ -211,22 +211,22 @@ int set_log_idx(int step) {
 		return 0;
 	}
 
-	sprintf(log_csv, "battery%d.csv", log_idx);
-	sprintf(log_png, "battery%d.png", log_idx);
+	sprintf(log_csv, "%s/battery%d.csv", getenv("HOME"), log_idx);
+	sprintf(log_png, "%s/battery%d.png", getenv("HOME"), log_idx);
 	return 1;
 }
 
-void new_battery_log() {
-	if (file_exists("battery.csv")) {
-		int x = 1;
-		do {
-			sprintf(buf, "battery%d.csv", x);
-			x++;
-		}
-		while (file_exists(buf));
-		rename("battery.csv", buf);
-	}
-}
+// void new_battery_log() {
+// 	if (file_exists("battery.csv")) {
+// 		int x = 1;
+// 		do {
+// 			sprintf(buf, "battery%d.csv", x);
+// 			x++;
+// 		}
+// 		while (file_exists(buf));
+// 		rename("battery.csv", buf);
+// 	}
+// }
 
 static int cpu_load(void *ptr)
 {
@@ -273,6 +273,8 @@ int main(int argc, char* argv[]) {
 	char title[64] = "";
 	uint8_t *keys = SDL_GetKeyState(NULL);
 	uint8_t nextline = 24;
+
+	set_log_idx(0);
 
 	sprintf(title, "BATTERY LOGGER");
 
@@ -332,7 +334,8 @@ int main(int argc, char* argv[]) {
 			draw_text(10, ln += 16, "SELECT: Exit", txtColor, VAlignMiddle | HAlignLeft);
 			draw_text(10, ln += 24, "With the battery fully charged start logging", txtColor, VAlignMiddle | HAlignLeft);
 			draw_text(10, ln += 16, "and let it discharge completely.", txtColor, VAlignMiddle | HAlignLeft);
-			sprintf(buf, "The log will be saved in %s.", log_csv);
+			draw_text(10, ln += 16, "The log will be saved in:", txtColor, VAlignMiddle | HAlignLeft);
+			sprintf(buf, "%s", log_csv);
 			draw_text(10, ln += 24, buf, txtColor, VAlignMiddle | HAlignLeft);
 
 		} else {
